@@ -1,4 +1,4 @@
-# Squeeze CMS schema push
+# Push Squeeze CMS Schema
 
 Push the content schema of a [Squeeze CMS](https://squeezecms.com) site from
 GitHub Actions. Define your types in `squeeze.config.ts` with

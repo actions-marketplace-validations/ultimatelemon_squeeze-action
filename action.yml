@@ -1,4 +1,4 @@
-name: Squeeze CMS schema push
+name: Push Squeeze CMS Schema
 description: Push your Squeeze CMS content schema (squeeze.config.ts) from CI with the squeeze-schema CLI.
 author: UltimateLemon
 branding:
