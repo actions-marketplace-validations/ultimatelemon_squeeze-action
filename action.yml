@@ -1,0 +1,52 @@
+name: Squeeze CMS schema push
+description: Push your Squeeze CMS content schema (squeeze.config.ts) from CI with the squeeze-schema CLI.
+author: UltimateLemon
+branding:
+  icon: upload-cloud
+  color: yellow
+
+inputs:
+  token:
+    description: A Schema push API key (sqz_push_...) of the site. Pass it from a secret.
+    required: true
+  config:
+    description: Path to the schema config, relative to working-directory.
+    default: squeeze.config.ts
+  working-directory:
+    description: Directory that holds the config and, if present, node_modules.
+    default: .
+  api-url:
+    description: Squeeze API URL.
+    default: https://api.squeezecms.com
+  force:
+    description: >-
+      Push even when types or fields that hold content are removed. Documents of
+      removed types are unpublished; values of removed fields are deleted for good.
+    default: "false"
+  cli-version:
+    description: >-
+      Version of @squeezecms/schema to run when the project does not install it
+      itself. Empty uses the project's version, or the latest release.
+    default: ""
+
+outputs:
+  changed:
+    description: '"true" when the push created a new schema version.'
+    value: ${{ steps.push.outputs.changed }}
+  version:
+    description: The schema version that is live after the push.
+    value: ${{ steps.push.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - id: push
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        SQUEEZE_TOKEN: ${{ inputs.token }}
+        SQUEEZE_API_URL: ${{ inputs.api-url }}
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_FORCE: ${{ inputs.force }}
+        INPUT_CLI_VERSION: ${{ inputs.cli-version }}
+      run: '"$GITHUB_ACTION_PATH/push.sh"'
