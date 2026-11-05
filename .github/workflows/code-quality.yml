@@ -1,15 +1,20 @@
-name: Check
+name: Code Quality
 
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_call:
 
 permissions:
   contents: read
 
+concurrency:
+  group: code-quality-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lint:
+  quality:
     # Public repo: GitHub-hosted runners only, never the self-hosted runner.
     runs-on: ubuntu-latest
     steps:
