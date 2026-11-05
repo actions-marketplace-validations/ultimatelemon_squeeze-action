@@ -12,7 +12,7 @@ dashboard under API-sleutels, and store it as the repository secret
 `SQUEEZE_SCHEMA_TOKEN`.
 
 ```yaml
-name: Squeeze schema
+name: Squeeze Schema
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 26
       - run: npm ci
       - uses: ultimatelemon/squeeze-action@v1
         with:
